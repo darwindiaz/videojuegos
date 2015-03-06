@@ -1,7 +1,20 @@
 
+body {
+    background: #fff;
+    font-family: Georgia, Times, "Times New Roman", serif;
+    color: #777;
+}
+
 .gen{
 	width: 94%;
 	margin-left: 30px;
+}
+
+.cuerpo{
+	margin: 0px auto;
+	width: 83%;
+	border-radius: 5px;
+	border: black solid;
 }
 
 .imaenc img{
@@ -12,25 +25,22 @@ border: black solid ;
 border-radius: 5px;
 }
 
-.cuerpo{
-	width: 100%;
-	border-radius: 5px;
-	border: black solid;
-}
-
 ul li{
+
 	display: inline-block;
-	margin: 10px;
-	font-size: 45px;
+	margin: 10px ;
+	margin-left: 105px;
+	font-size: 30px;
 }
 
 ul a{
-	padding: 19px;
-	height: 5px;
+	padding: 20px;
+	height: 150px;
 	border: solid black;
 	border-radius: 10px;
 	background: #770000;
 	color: white;
+	font-family: Georgia, Times, "Times New Roman", serif;
 	text-decoration: none;
 }
 
@@ -42,4 +52,56 @@ ul a:hover{
 	background: #000033;
 	color: white;
 	text-decoration: none;
+}
+
+
+#his{
+	margin-left: auto auto;
+    padding: 10px;
+    height: 5px;
+    border: solid black;
+    border-radius: 10px;
+    background: #770000;
+    color: white;
+    font-family: Georgia, Times, "Times New Roman", serif;
+    text-decoration: none;
+}
+
+#his:hover{
+	padding: 10px;
+	height: 5px;
+	border: solid black;
+	border-radius: 10px;
+	background: #000033;
+	color: white;
+	text-decoration: none;
+}
+
+#sesion{
+	
+    padding: 10px;
+    height: 5px;
+    border: solid black;
+    border-radius: 10px;
+    background: #770000;
+    color: white;
+    font-family: Georgia, Times, "Times New Roman", serif;
+    text-decoration: none;
+}
+
+#sesion:hover{
+	padding: 10px;
+	height: 5px;
+	border: solid black;
+	border-radius: 10px;
+	background: #000033;
+	color: white;
+	text-decoration: none;
+}
+
+footer {
+    color: #777;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 20px;
 }

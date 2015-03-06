@@ -1,55 +1,95 @@
-<!DOCTYPE html>
-<html lang="Es">
-<head>
-	<meta charset="utf-8">
-	<title>GAMEX.COM</title>
-	<link rel="stylesheet" href="css/stylep.css">
-	<div class="imaenc">
-		<img src="./imag/logo.jpg" >
-	</div> 
-</head>
-<body>
+<?php
+session_start();
+if(!isset($_SESSION["session_username"])) {
+ header("location:ingresaruser.php");
+} else {
+?>
+ 
+ <div id="welcome">
+ 	<table>
+ 		<tr>
+ 		<td><div id="welc"><h2>Bienvenido, <span><?php echo $_SESSION['session_username'];?></span></h2></div></td>
+ 		<div id="botona"><td><p><a id="his" href="historial.php" name="histo" value="">Tus Prestamos</a></p></td>
+ 		<td><p><a id="sesion" href="cerrarsesion.php">Cerrar Sesion</a></p></td></div>
+ 		</tr>
+ 	</table>	
+</div>
+
+<?php
+	include("plantillas/header.php");
+?>
+
+<link rel="stylesheet" href="css/stylep.css">
+<form name="categorias" action="extra.php" method="POST">
 <div class="menu">
 	<ul>
-		<li><a href="">GNRAL</a></li>
-		<li><a href="">AUTOS</a></li>
-		<li><a href="">AVENTUR</a></li>
-		<li><a href="">ACCION</a></li>
-		<li><a href="">DEPORTE</a></li>
+		<li><a target="_self" ><input type="image" name="genero" value="GNRAL" /></a></li>
+		<li><a target="_self" ><input type="image" name="genero" value="DEPORTES"></a></li>
+		<li><a target="_self" ><input type="image" name="genero" value="AVENTURA"></a></li>
+		<li><a target="_self" ><input type="image" name="genero" value="ACCION"></a></li>
+		<li><a target="_self" ><input type="image" name="genero" value="AUTOS"></a></li>
 	</ul>
 </div>
+</form>
+
+<?php
+	$consulta="SELECT * FROM videojuego";
+
+	if(!empty($_POST['extra'])){
+		
+		$busqueda=$_POST['extra'];
+
+		if($busqueda=="AUTOS"){
+			$consulta= "SELECT * FROM videojuego WHERE id_cat=1";
+		}
+		if($busqueda=="ACCION"){
+			$consulta= "SELECT * FROM videojuego WHERE id_cat=3";
+		}
+		if($busqueda=="AVENTURA"){
+			$consulta= "SELECT * FROM videojuego WHERE id_cat=2";
+		}
+		if($busqueda=="DEPORTES"){
+			$consulta= "SELECT * FROM videojuego WHERE id_cat=4";
+		}
+		if($busqueda=="GNRAL"){
+			$consulta= "SELECT * FROM videojuego";
+		}
+	}
+?>
+
 <div class="gen">
-	<form action="videojuego.php" method="get">
+	<form action="videojuego.php" method="post">
 		<div class="cuerpo">
-		<table>
+		<table name="tall">
 		<?php
-			include "Consulta.php";
-			include "conexion.php";
-			$consulta= mysql_query("SELECT * FROM `videojuego`");
-			$fil=mysql_num_rows($consulta);
-			for ($i=0; $i < $fil; $i++) {
-				echo '<tr>';
-				echo '<td>';
-					echo '<img src="./imag/'.mysql_result($consulta, $i,"consola_v").'.jpg" height="150" width="200">';
-					echo '</td>';
-				for ($j=0; $j < 5; $j++) { 						
+			include "plantillas/conexion.php";
+			$ccon=mysqli_query($conexion,$consulta);
+			$fil=mysqli_num_rows($ccon);
+			$i=5;
+			$j=0;
+			while ($col=mysqli_fetch_assoc($ccon)) {
+			//for ($i=0; $i < $fil; $i++) {
+				if($i % '5' == 0){
+					echo '<tr>';
+				}				
 					echo '<td>';
-					echo "<div  class='texto' align='center	'>".mysql_result($consulta, $i,"nombre_v")."</div>";
 					//boton imagen consulta a base de datos
-					echo '<a class="imavj" href="videojuego.php" target="_self"><input type="image" name="imagen" value="'.mysql_result($consulta, $i,"id_v").'" src="./imag/'.mysql_result($consulta, $i,"nombre_v").'.jpg" height="150" width="200"></a>';
+					echo '<a class="imavj" target="_self"><input type="image" name="imagen" value="'.$col["id_v"].'" src="./imag/'.$col["nombre_v"].'.jpg" height="150" width="200"></a>';
 					//trae datos necesarios de la base
-					echo "<div class='texto' >"."Stock: ".mysql_result($consulta, $i,"cantidad_v")."</div>";
-					echo "<div class='texto' align='center'>"."Valor: €€".mysql_result($consulta, $i,"precio_v")."</div>";
+					echo "<div  class='texto' align='center'>".$col["nombre_v"]."</div>";
+					echo "<div class='texto' align='center'>"."Stock: ".$col["cantidad_v"]."</div>";
+					echo "<div class='texto' align='center'>"."Valor: €€".$col["precio_v"]."</div>";
 					echo '</td>';
 					$i++;
+					$j++;
+				if($j == 5){
+					echo '</tr>';
 				}
-				$i--;
-				echo '</tr>';
 			}
 		?>
 		</table>
 		</div>
 	</form>
 </div>
-</body>
-</html>
+
+<?php include("plantillas/footer.php"); }?> 
